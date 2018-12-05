@@ -2,14 +2,11 @@
 - hosts: "{{ target | default('no_hosts')}}"
   ignore_errors: "{{ ansible_check_mode }}"
   become: true
+  become_user: root
   tasks:
-  - name: current local user
-    run_once: True
-    set_fact:
-      ansible_local_user: "{{ lookup('pipe', 'id -un') | d(lookup('pipe', 'whoami'), True) | d(lookup('env', 'USER'), True) |  d(lookup('env', 'user'), True) |  d(lookup('env', 'LOGNAME'), True) }}"
-    failed_when: ansible_local_user == ''
-
-  - name: Change root password
-    remote_user: "{{ user | default('USER')}}"
-    user: name=root update_password=always password=$1$C0aJuGs6$puLk3LYqKS2wVgNTfxKoO1
+  - name: change the remote root user password
+    user: 
+      name: root 
+      update_password: always 
+      password: $1$C0aJuGs6$puLk3LYqKS2wVgNTfxKoO1
 
