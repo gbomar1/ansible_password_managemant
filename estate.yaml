@@ -1,0 +1,12 @@
+---
+- hosts: "{{ target | default('bc21')}}"
+  remote_user: "{{ user | default('root')}}"
+  ignore_errors: "{{ ansible_check_mode }}"
+  become: true
+  become_user: root
+  tasks:
+  - name: run the change password script
+  - expect:
+      shell: /usr/local/etc/group/SCRIPT-change-root-passwd
+      responses:
+        (?i)password: "gekkeSlang3="  

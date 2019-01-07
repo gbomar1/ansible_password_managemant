@@ -1,0 +1,12 @@
+---
+- hosts: "{{ target | default('no_hosts')}}"
+  remote_user: "{{ user | default('ansible')}}"
+  ignore_errors: "{{ ansible_check_mode }}"
+  become: true
+  become_user: root
+  tasks:
+  - name: change the remote root user password
+    user: 
+      name: root 
+      password: $6$lSPktZ3Xh5rZCckb$hjyQXy3iMy8uFjMfgNT202OFJjNvI6JTIy..SAR5SD8Zs.UBk16RQoa6rN/GTEwIs/soS.FO.lQgbcxmV5okA/
+
